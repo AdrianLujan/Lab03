@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Lab03
 {
     public partial class Form1 : Form
     {
-        SqlConnection conn;
+        SqlConnection conn = new SqlConnection("Data Source = LAPTOP-GM45TMSI\\SQLEXPRESS; Initial Catalog = db_lab03; Integrated Security = True");
         public Form1()
         {
             InitializeComponent();
@@ -38,14 +32,15 @@ namespace Lab03
             else
                 str += "User Id" + user + ";Password=" + pwd + ";";
 
-            try 
+            try
             {
                 conn = new SqlConnection(str);
                 conn.Open();
                 MessageBox.Show("Conectado satisfactoriamente");
                 btnDesconectar.Enabled = true;
             }
-            catch (Exception ex){
+            catch (Exception ex)
+            {
                 MessageBox.Show("Error al conectar al servidor: \n" + ex.ToString());
 
             }
@@ -99,6 +94,13 @@ namespace Lab03
                 textUsuario.Enabled = true;
                 textPassword.Enabled = true;
             }
+        }
+
+        private void btnPersona_Click(object sender, EventArgs e)
+        {
+            Persona persona = new Persona(conn);
+            persona.Show();
+
         }
     }
 }
